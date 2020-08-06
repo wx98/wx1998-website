@@ -1,6 +1,5 @@
 package com.wx1998.webapp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +14,12 @@ import java.util.Map;
 public class HomeController {
 
 
-    @Autowired
+    final
     JdbcTemplate template;
+
+    public HomeController(JdbcTemplate template) {
+        this.template = template;
+    }
 
     @GetMapping(value = "/")
     public String index(Model model){
@@ -30,9 +33,7 @@ public class HomeController {
     @ResponseBody
     public List<Map<String, Object>> index2(){
 
-        List<Map<String, Object>> list = template.queryForList("select * from test_table");
-
-        return list;
+        return template.queryForList("select * from test_table");
     }
 
 
